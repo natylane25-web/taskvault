@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin – TaskVault</title>
+<script src="/config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--surface:#111118;--surface2:#18181f;--border:#2a2a38;--accent:#c8f04d;--text:#f0f0f8;--muted:#7a7a90;--error:#ff5757;--success:#4ddc8a;--sw:210px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;min-height:100vh;}
+.sb{width:var(--sw);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;height:100vh;z-index:50;display:flex;flex-direction:column;}
+.sb-logo{padding:20px 18px;border-bottom:1px solid var(--border);}
+.sb-logo span{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;}
+.sb-logo span em{font-style:normal;color:var(--accent);}
+.abadge{display:inline-block;background:rgba(255,87,87,.15);color:var(--error);font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:7px;vertical-align:middle;}
+.ni{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;text-align:left;}
+.ni:hover,.ni.active{color:var(--accent);}
+nav{padding:10px 8px;flex:1;}
+.main{margin-left:var(--sw);flex:1;padding:26px;}
+.ptitle{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:22px;}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:24px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.sc .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+.sc .v{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;}.sc .v.g{color:var(--accent);}
+.panel{display:none;}.panel.active{display:block;}
+.tw{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:auto;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);}
+td{padding:11px 14px;font-size:13px;border-bottom:1px solid rgba(42,42,56,.5);white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;}
+.bg{background:rgba(77,220,138,.15);color:var(--success);}
+.by{background:rgba(255,200,0,.15);color:#ffc800;}
+.br{background:rgba(255,87,87,.15);color:var(--error);}
+.bm{background:rgba(122,122,144,.15);color:var(--muted);}
+.bx{padding:5px 11px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:none;transition:opacity .2s;}
+.bx:hover{opacity:.8;}
+.bap{background:var(--accent);color:#0a0a0a;}
+.brj{background:rgba(255,87,87,.15);color:var(--error);}
+.btn-add{background:var(--accent);color:#0a0a0a;border:none;padding:9px 18px;border-radius:8px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:14px;}
+.al{padding:11px 14px;border-radius:8px;font-size:13px;}
+.al-s{background:rgba(77,220,138,.1);border:1px solid rgba(77,220,138,.3);color:var(--success);}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:center;justify-content:center;}
+.mo.open{display:flex;}
+.mbox{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;max-width:400px;width:92%;}
+.mbox h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;}
+.mbox p{color:var(--muted);font-size:13px;margin-bottom:18px;}
+.mi{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;margin-bottom:11px;}
+.brow{display:flex;gap:9px;}
+.bmd{padding:11px 18px;border-radius:8px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;border:none;}
+.bmd.ba{background:var(--accent);color:#0a0a0a;}
+.bmd.bc{background:var(--surface2);color:var(--muted);}
+#msgArea{margin-bottom:14px;}
+</style>
+</head>
+<body>
+<aside class="sb">
+  <div class="sb-logo"><span>Task<em>Vault</em><span class="abadge">ADMIN</span></span></div>
+  <nav>
+    <button class="ni active" onclick="sw('overview',this)">📊 Overview</button>
+    <button class="ni" onclick="sw('withdrawals',this)">💸 Withdrawals</button>
+    <button class="ni" onclick="sw('users',this)">👥 Users</button>
+    <button class="ni" onclick="sw('tasks',this)">⚡ Tasks</button>
+  </nav>
+  <div style="padding:12px 8px;border-top:1px solid var(--border);">
+    <button class="ni" onclick="logout()" style="color:var(--error)">🚪 Logout</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="panel active" id="panel-overview">
+    <div class="ptitle">Admin Overview</div>
+    <div class="sg">
+      <div class="sc"><div class="l">Users</div><div class="v g" id="ovU">—</div></div>
+      <div class="sc"><div class="l">Total Paid</div><div class="v" id="ovP">—</div></div>
+      <div class="sc"><div class="l">Pending Payouts</div><div class="v" id="ovPe">—</div></div>
+      <div class="sc"><div class="l">Active Tasks</div><div class="v" id="ovT">—</div></div>
+      <div class="sc"><div class="l">Completions</div><div class="v" id="ovC">—</div></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-withdrawals">
+    <div class="ptitle">Withdrawal Requests</div>
+    <div id="msgArea"></div>
+    <div class="tw" id="wTbl"></div>
+  </div>
+
+  <div class="panel" id="panel-users">
+    <div class="ptitle">All Users</div>
+    <div class="tw" id="uTbl"></div>
+  </div>
+
+  <div class="panel" id="panel-tasks">
+    <div class="ptitle">Manage Tasks</div>
+    <button class="btn-add" onclick="$('mo').classList.add('open')">+ Add Task</button>
+    <div class="tw" id="tTbl"></div>
+  </div>
+</main>
+
+<!-- ADD TASK MODAL -->
+<div class="mo" id="mo">
+  <div class="mbox">
+    <h3>Add New Task</h3>
+    <p>Tasks go live immediately after adding.</p>
+    <input class="mi" id="tT" placeholder="Task title"/>
+    <input class="mi" id="tD" placeholder="Description"/>
+    <input class="mi" id="tC" placeholder="Category (e.g. Survey, Video)"/>
+    <input class="mi" type="number" id="tR" placeholder="Reward ($)" step="0.01" min="0.01"/>
+    <input class="mi" type="number" id="tM" placeholder="Time in minutes" min="1"/>
+    <input class="mi" id="tU" placeholder="Task URL (optional)"/>
+    <div class="brow">
+      <button class="bmd ba" onclick="addTask()">Add Task</button>
+      <button class="bmd bc" onclick="$('mo').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const H=()=>({'Content-Type':'application/json','Authorization':`Bearer ${localStorage.getItem('tv_token')}`});
+const $=id=>document.getElementById(id);
+const fd=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+if(!localStorage.getItem('tv_token')) window.location.href='/login.html';
+
+async function init(){
+  const r=await fetch(`${API}/admin/stats`,{headers:H()});
+  if(r.status===403){alert('Admin access required');logout();return;}
+  const s=await r.json();
+  $('ovU').textContent=s.totalUsers;$('ovP').textContent='$'+s.totalPaid.toFixed(2);
+  $('ovPe').textContent=s.pendingPayouts;$('ovT').textContent=s.totalTasks;$('ovC').textContent=s.completions;
+}
+
+async function loadWd(){
+  const r=await fetch(`${API}/admin/withdrawals`,{headers:H()});
+  const d=await r.json();
+  $('wTbl').innerHTML=`<table><thead><tr><th>User</th><th>Amount</th><th>Method</th><th>Account</th><th>Date</th><th>Status</th><th>Action</th></tr></thead><tbody>
+  ${d.map(w=>`<tr><td>${w.name}<br><small style="color:var(--muted)">${w.email}</small></td>
+  <td style="font-family:Syne,sans-serif;font-weight:700">$${w.amount.toFixed(2)}</td>
+  <td style="text-transform:capitalize">${w.method.replace('_',' ')}</td>
+  <td>${w.account}</td><td>${fd(w.requested_at)}</td>
+  <td><span class="badge ${w.status==='paid'?'bg':w.status==='pending'?'by':'br'}">${w.status}</span></td>
+  <td>${w.status==='pending'?`<button class="bx bap" onclick="procWd(${w.id},'paid')">Approve</button> <button class="bx brj" onclick="procWd(${w.id},'rejected')">Reject</button>`:'—'}</td>
+  </tr>`).join('')||'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:20px">No withdrawals</td></tr>'}</tbody></table>`;
+}
+
+async function procWd(id,st){
+  if(!confirm(`${st==='paid'?'Approve':'Reject'} this withdrawal?`))return;
+  const r=await fetch(`${API}/admin/withdrawals/${id}`,{method:'PATCH',headers:H(),body:JSON.stringify({status:st})});
+  if(r.ok){msg(`Withdrawal ${st}`,'s');loadWd();init();}
+}
+
+async function loadUsers(){
+  const r=await fetch(`${API}/admin/users`,{headers:H()});
+  const d=await r.json();
+  $('uTbl').innerHTML=`<table><thead><tr><th>Name</th><th>Email</th><th>Balance</th><th>Earned</th><th>Joined</th><th>Status</th><th>Action</th></tr></thead><tbody>
+  ${d.map(u=>`<tr><td>${u.name}</td><td>${u.email}</td><td style="color:var(--accent);font-weight:700">$${u.balance.toFixed(2)}</td><td>$${u.total_earned.toFixed(2)}</td><td>${fd(u.created_at)}</td>
+  <td><span class="badge ${u.is_active?'bg':'br'}">${u.is_active?'Active':'Banned'}</span></td>
+  <td><button class="bx ${u.is_active?'brj':'bap'}" onclick="togUser(${u.id},${u.is_active?0:1})">${u.is_active?'Ban':'Unban'}</button></td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+async function togUser(id,st){
+  await fetch(`${API}/admin/users/${id}/status`,{method:'PATCH',headers:H(),body:JSON.stringify({is_active:st})});
+  loadUsers();
+}
+
+async function loadTasks(){
+  const r=await fetch(`${API}/admin/tasks`,{headers:H()});
+  const d=await r.json();
+  $('tTbl').innerHTML=`<table><thead><tr><th>Title</th><th>Category</th><th>Reward</th><th>Completions</th><th>Status</th><th>Action</th></tr></thead><tbody>
+  ${d.map(t=>`<tr><td>${t.title}</td><td>${t.category}</td><td style="color:var(--accent);font-weight:700">$${t.reward.toFixed(2)}</td><td>${t.completions}/${t.max_completions}</td>
+  <td><span class="badge ${t.is_active?'bg':'br'}">${t.is_active?'Active':'Off'}</span></td>
+  <td><button class="bx ${t.is_active?'brj':'bap'}" onclick="togTask(${t.id},${t.is_active?0:1})">${t.is_active?'Disable':'Enable'}</button></td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+async function togTask(id,st){
+  await fetch(`${API}/admin/tasks/${id}`,{method:'PATCH',headers:H(),body:JSON.stringify({is_active:st})});
+  loadTasks();
+}
+
+async function addTask(){
+  const body={title:$('tT').value,description:$('tD').value,category:$('tC').value,reward:$('tR').value,time_minutes:$('tM').value,url:$('tU').value||null};
+  if(!body.title||!body.description||!body.category||!body.reward||!body.time_minutes){alert('Fill in all required fields.');return;}
+  const r=await fetch(`${API}/admin/tasks`,{method:'POST',headers:H(),body:JSON.stringify(body)});
+  if(r.ok){$('mo').classList.remove('open');loadTasks();}
+}
+
+function sw(n,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));
+  $(`panel-${n}`).classList.add('active');el.classList.add('active');
+  if(n==='withdrawals')loadWd();else if(n==='users')loadUsers();else if(n==='tasks')loadTasks();
+}
+
+function msg(m,t){$('msgArea').innerHTML=`<div class="al al-${t==='s'?'s':'e'}" style="margin-bottom:14px">${m}</div>`;setTimeout(()=>$('msgArea').innerHTML='',4000);}
+function logout(){localStorage.removeItem('tv_token');localStorage.removeItem('tv_user');window.location.href='/login.html';}
+
+init();
+</script>
+</body>
+    </html>
+                                                   
