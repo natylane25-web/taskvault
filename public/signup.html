@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sign Up – TaskVault</title>
+<script src="/config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--surface:#111118;--border:#2a2a38;--accent:#c8f04d;--text:#f0f0f8;--muted:#7a7a90;--error:#ff5757;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+body::before{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(ellipse,rgba(200,240,77,.1) 0%,transparent 70%);pointer-events:none;}
+.logo{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;text-decoration:none;color:var(--text);margin-bottom:20px;}.logo span{color:var(--accent);}
+.bonus{background:rgba(200,240,77,.1);border:1px solid rgba(200,240,77,.25);border-radius:12px;padding:13px 18px;display:flex;align-items:center;gap:10px;margin-bottom:20px;max-width:400px;width:100%;font-size:13px;}
+.bonus strong{color:var(--accent);}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:400px;}
+h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px;}
+.sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+.field{margin-bottom:15px;}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em;}
+input{width:100%;background:#18181f;border:1px solid var(--border);border-radius:10px;padding:13px 16px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border-color .2s;}
+input:focus{border-color:rgba(200,240,77,.5);}
+.btn{width:100%;background:var(--accent);color:#0a0a0a;border:none;padding:14px;border-radius:10px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:6px;}
+.btn:hover{opacity:.88;}.btn:disabled{opacity:.5;cursor:not-allowed;}
+.err{background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.3);color:var(--error);padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
+.terms{font-size:12px;color:var(--muted);text-align:center;margin-top:14px;}
+.foot{text-align:center;margin-top:20px;font-size:14px;color:var(--muted);}
+.foot a{color:var(--accent);text-decoration:none;font-weight:600;}
+</style>
+</head>
+<body>
+<a class="logo" href="/">Task<span>Vault</span></a>
+<div class="bonus"><span>🎉</span><span>Sign up and get a <strong>$5.00 welcome bonus</strong> instantly.</span></div>
+<div class="card">
+  <h1>Create your account</h1>
+  <p class="sub">Free to join. Start earning today.</p>
+  <div id="err" class="err"></div>
+  <div class="field"><label>Full Name</label><input type="text" id="name" placeholder="Jane Smith"/></div>
+  <div class="field"><label>Email</label><input type="email" id="email" placeholder="you@example.com"/></div>
+  <div class="field"><label>Password</label><input type="password" id="pw" placeholder="Min. 8 characters"/></div>
+  <div class="field"><label>Referral Code <span style="text-transform:none;font-weight:400;letter-spacing:0">(optional)</span></label>
+    <input type="text" id="ref" placeholder="e.g. AB1C2D3E" style="text-transform:uppercase"/></div>
+  <button class="btn" id="btn" onclick="signup()">Create Free Account</button>
+  <p class="terms">By signing up you agree to our Terms &amp; Privacy Policy.</p>
+</div>
+<p class="foot">Already have an account? <a href="/login.html">Log in</a></p>
+<script>
+if(localStorage.getItem('tv_token')) window.location.href='/dashboard.html';
+const p=new URLSearchParams(window.location.search);
+if(p.get('ref')) document.getElementById('ref').value=p.get('ref').toUpperCase();
+async function signup(){
+  const name=document.getElementById('name').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const pw=document.getElementById('pw').value;
+  const ref=document.getElementById('ref').value.trim();
+  const btn=document.getElementById('btn');
+  hide();
+  if(!name||!email||!pw){show('Please fill in all required fields.');return;}
+  if(pw.length<8){show('Password must be at least 8 characters.');return;}
+  btn.disabled=true;btn.textContent='Creating account…';
+  try{
+    const r=await fetch(`${API}/auth/register`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password:pw,referral_code:ref||undefined})});
+    const d=await r.json();
+    if(!r.ok){show(d.error);return;}
+    localStorage.setItem('tv_token',d.token);
+    localStorage.setItem('tv_user',JSON.stringify(d.user));
+    window.location.href='/dashboard.html';
+  }catch{show('Connection error.');}
+  finally{btn.disabled=false;btn.textContent='Create Free Account';}
+}
+function show(m){const e=document.getElementById('err');e.textContent=m;e.style.display='block';}
+function hide(){document.getElementById('err').style.display='none';}
+</script>
+</body>
+</html>
