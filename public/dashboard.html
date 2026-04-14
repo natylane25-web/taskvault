@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard – TaskVault</title>
+<script src="/config.js"></script>
+<!-- ADSENSE: uncomment after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#09090f;--surface:#111118;--surface2:#18181f;--border:#2a2a38;--accent:#c8f04d;--accent2:#7eeabd;--text:#f0f0f8;--muted:#7a7a90;--error:#ff5757;--success:#4ddc8a;--sw:230px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;display:flex;min-height:100vh;}
+.sb{width:var(--sw);background:var(--surface);border-right:1px solid var(--border);position:fixed;top:0;left:0;height:100vh;z-index:50;display:flex;flex-direction:column;transition:transform .3s;}
+.sb-logo{padding:22px 18px;border-bottom:1px solid var(--border);}
+.sb-logo a{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;text-decoration:none;color:var(--text);}.sb-logo a span{color:var(--accent);}
+.sb-nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:3px;}
+.ni{display:flex;align-items:center;gap:11px;padding:10px 13px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;transition:all .15s;border:none;background:none;width:100%;text-align:left;}
+.ni:hover,.ni.active{background:rgba(200,240,77,.08);color:var(--text);}
+.ni.active{color:var(--accent);font-weight:600;}
+.ni .ic{font-size:17px;width:20px;text-align:center;}
+.sb-bot{padding:14px 10px;border-top:1px solid var(--border);}
+.up{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:9px;}
+.ua{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#0a0a0a;flex-shrink:0;}
+.un{font-size:13px;font-weight:600;}.ub{font-size:12px;color:var(--accent);font-weight:700;}
+.main{margin-left:var(--sw);flex:1;padding:28px 24px;max-width:calc(100vw - var(--sw));}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.ptitle{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;}
+.btn-acc{background:var(--accent);color:#0a0a0a;border:none;padding:9px 18px;border-radius:8px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.mob-btn{display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;}
+.panel{display:none;}.panel.active{display:block;}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:24px;}
+.sc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:20px;}
+.sc .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.sc .v{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;}
+.sc .v.g{color:var(--accent);}
+.ad-slot{background:var(--surface);border:1px dashed var(--border);border-radius:11px;min-height:80px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;margin-bottom:20px;text-align:center;padding:10px;}
+.tw{background:var(--surface);border:1px solid var(--border);border-radius:13px;overflow:auto;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);}
+td{padding:12px 16px;font-size:13px;border-bottom:1px solid rgba(42,42,56,.5);}
+tr:last-child td{border-bottom:none;}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;}
+.bg{background:rgba(77,220,138,.15);color:var(--success);}
+.by{background:rgba(255,200,0,.15);color:#ffc800;}
+.br{background:rgba(255,87,87,.15);color:var(--error);}
+.bm{background:rgba(122,122,144,.15);color:var(--muted);}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.tc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:20px;transition:border-color .2s;}
+.tc:hover{border-color:rgba(200,240,77,.3);}
+.tc.done{opacity:.55;}
+.tcat{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--accent);margin-bottom:7px;}
+.tc h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:7px;}
+.tc p{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:14px;}
+.tmeta{display:flex;align-items:center;justify-content:space-between;}
+.trew{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--accent);}
+.ttim{font-size:12px;color:var(--muted);}
+.tbtn{margin-top:12px;width:100%;padding:10px;border-radius:8px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:none;transition:all .2s;}
+.tbtn.av{background:var(--accent);color:#0a0a0a;}.tbtn.av:hover{opacity:.88;}
+.tbtn.cp{background:rgba(77,220,138,.1);color:var(--success);cursor:default;}
+.rb{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:24px;margin-bottom:20px;}
+.rb h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;}
+.rb p{color:var(--muted);font-size:13px;margin-bottom:18px;}
+.rrow{display:flex;gap:10px;}
+.ri{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;color:var(--text);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;}
+.rs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px;}
+.rst{background:var(--surface2);border-radius:9px;padding:13px;text-align:center;}
+.rst .rv{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--accent);}
+.rst .rl{font-size:11px;color:var(--muted);margin-top:3px;}
+.fc{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:24px;max-width:480px;}
+.fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.05em;}
+.fi{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:12px 15px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;margin-bottom:16px;}
+.fi:focus{border-color:rgba(200,240,77,.5);}
+select.fi option{background:var(--surface);}
+.fn{font-size:11px;color:var(--muted);margin-top:-10px;margin-bottom:14px;}
+.bfull{width:100%;background:var(--accent);color:#0a0a0a;border:none;padding:13px;border-radius:9px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.bfull:hover{opacity:.88;}.bfull:disabled{opacity:.5;cursor:not-allowed;}
+.al{padding:11px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
+.al-s{background:rgba(77,220,138,.1);border:1px solid rgba(77,220,138,.3);color:var(--success);}
+.al-e{background:rgba(255,87,87,.1);border:1px solid rgba(255,87,87,.3);color:var(--error);}
+.sh{margin-bottom:18px;}.sh h2{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;}.sh p{color:var(--muted);font-size:13px;margin-top:3px;}
+@media(max-width:768px){.sb{transform:translateX(-100%);}.sb.open{transform:translateX(0);}.main{margin-left:0;padding:18px 14px;max-width:100vw;}.mob-btn{display:block;}.sg{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<aside class="sb" id="sb">
+  <div class="sb-logo"><a href="/">Task<span>Vault</span></a></div>
+  <nav class="sb-nav">
+    <button class="ni active" onclick="sw('home',this)"><span class="ic">🏠</span>Dashboard</button>
+    <button class="ni" onclick="sw('tasks',this)"><span class="ic">⚡</span>Tasks</button>
+    <button class="ni" onclick="sw('referrals',this)"><span class="ic">👥</span>Referrals</button>
+    <button class="ni" onclick="sw('withdraw',this)"><span class="ic">💸</span>Withdraw</button>
+    <button class="ni" onclick="sw('history',this)"><span class="ic">📋</span>History</button>
+  </nav>
+  <div class="sb-bot">
+    <div class="up"><div class="ua" id="sIni">?</div><div><div class="un" id="sName">…</div><div class="ub" id="sBal">$0.00</div></div></div>
+    <button class="ni" onclick="logout()" style="margin-top:6px;color:var(--error)"><span class="ic">🚪</span>Log Out</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <button class="mob-btn" onclick="document.getElementById('sb').classList.toggle('open')">☰</button>
+      <h1 class="ptitle" id="pgTitle">Dashboard</h1>
+    </div>
+    <button class="btn-acc" onclick="sw('withdraw',document.querySelector('[onclick*=withdraw]'))">Withdraw</button>
+  </div>
+
+  <!-- HOME -->
+  <div class="panel active" id="panel-home">
+    <div class="ad-slot">📢 Ad Banner — add AdSense unit here after approval</div>
+    <div class="sg">
+      <div class="sc"><div class="l">Balance</div><div class="v g" id="stBal">$0.00</div></div>
+      <div class="sc"><div class="l">Total Earned</div><div class="v" id="stTot">$0.00</div></div>
+      <div class="sc"><div class="l">Tasks Done</div><div class="v" id="stTsk">0</div></div>
+      <div class="sc"><div class="l">Referrals</div><div class="v" id="stRef">0</div></div>
+    </div>
+    <div class="sh"><h2>Recent Transactions</h2></div>
+    <div class="tw" id="rTx"></div>
+    <div class="ad-slot" style="margin-top:20px;">📢 Ad Rectangle — add AdSense unit here after approval</div>
+  </div>
+
+  <!-- TASKS -->
+  <div class="panel" id="panel-tasks">
+    <div class="ad-slot">📢 Ad Banner — add AdSense unit here</div>
+    <div class="sh"><h2>Available Tasks</h2><p>Balance updates instantly when you complete a task</p></div>
+    <div id="tAlert" class="al al-s"></div>
+    <div class="tgrid" id="tGrid"><p style="color:var(--muted)">Loading…</p></div>
+  </div>
+
+  <!-- REFERRALS -->
+  <div class="panel" id="panel-referrals">
+    <div class="rb">
+      <h3>Your Referral Link</h3>
+      <p>Earn <strong style="color:var(--accent)">$3.00</strong> for every friend who joins through your link.</p>
+      <div class="rrow">
+        <input class="ri" id="refLink" readonly/>
+        <button class="btn-acc" onclick="copyRef()">Copy</button>
+      </div>
+      <div class="rs">
+        <div class="rst"><div class="rv" id="rCnt">0</div><div class="rl">Referrals</div></div>
+        <div class="rst"><div class="rv" id="rEarn">$0</div><div class="rl">Earned</div></div>
+        <div class="rst"><div class="rv">$3</div><div class="rl">Per Referral</div></div>
+      </div>
+    </div>
+    <div class="ad-slot">📢 Ad Rectangle — add AdSense unit here</div>
+    <div class="sh"><h2>Referral History</h2></div>
+    <div class="tw" id="refTbl"></div>
+  </div>
+
+  <!-- WITHDRAW -->
+  <div class="panel" id="panel-withdraw">
+    <div class="sh"><h2>Request Withdrawal</h2><p>Minimum $25.00 · 1–3 business days</p></div>
+    <div id="wAlert" class="al"></div>
+    <div class="fc">
+      <label class="fl">Amount (USD)</label>
+      <input class="fi" type="number" id="wAmt" min="25" step="0.01" placeholder="25.00"/>
+      <p class="fn" id="wNote">Available: loading…</p>
+      <label class="fl">Payment Method</label>
+      <select class="fi" id="wMeth"><option value="">Select method</option><option value="paypal">PayPal</option><option value="wise">Wise</option><option value="bank_transfer">Bank Transfer</option></select>
+      <label class="fl">Account / Email</label>
+      <input class="fi" type="text" id="wAcc" placeholder="PayPal email or account number"/>
+      <button class="bfull" id="wBtn" onclick="submitWd()">Submit Withdrawal Request</button>
+    </div>
+    <div class="sh" style="margin-top:28px;"><h2>Withdrawal History</h2></div>
+    <div class="tw" id="wHist"></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="panel" id="panel-history">
+    <div class="sh"><h2>All Transactions</h2></div>
+    <div class="tw" id="histTbl"></div>
+  </div>
+</main>
+
+<script>
+let token=localStorage.getItem('tv_token');
+if(!token) window.location.href='/login.html';
+const H=()=>({'Content-Type':'application/json','Authorization':`Bearer ${token}`});
+const $=id=>document.getElementById(id);
+const fd=d=>new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+async function init(){
+  try{
+    const[ur,sr]=await Promise.all([fetch(`${API}/user/me`,{headers:H()}),fetch(`${API}/user/stats`,{headers:H()})]);
+    if(!ur.ok){logout();return;}
+    const u=await ur.json(),s=await sr.json();
+    $('sName').textContent=u.name;$('sBal').textContent='$'+u.balance.toFixed(2);$('sIni').textContent=u.name[0].toUpperCase();
+    $('stBal').textContent='$'+s.balance.toFixed(2);$('stTot').textContent='$'+s.total_earned.toFixed(2);
+    $('stTsk').textContent=s.tasks_completed;$('stRef').textContent=s.referral_count;
+    $('refLink').value=`${window.location.origin}/signup.html?ref=${u.referral_code}`;
+    $('rCnt').textContent=s.referral_count;$('rEarn').textContent='$'+(s.referral_count*3).toFixed(0);
+    $('wNote').textContent=`Available: $${s.balance.toFixed(2)}`;
+    loadTx();
+  }catch(e){console.error(e);}
+}
+
+async function loadTx(){
+  const r=await fetch(`${API}/user/transactions`,{headers:H()});
+  const t=await r.json();
+  const rows=t.slice(0,8).map(x=>`<tr><td>${fd(x.created_at)}</td><td>${x.description}</td><td style="font-family:Syne,sans-serif;font-weight:700;color:${x.amount>=0?'var(--accent)':'var(--error)'};">${x.amount>=0?'+':''}$${Math.abs(x.amount).toFixed(2)}</td></tr>`).join('');
+  $('rTx').innerHTML=`<table><thead><tr><th>Date</th><th>Description</th><th>Amount</th></tr></thead><tbody>${rows||'<tr><td colspan="3" style="text-align:center;color:var(--muted)">No transactions yet</td></tr>'}</tbody></table>`;
+  $('histTbl').innerHTML=`<table><thead><tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th></tr></thead><tbody>${t.map(x=>`<tr><td>${fd(x.created_at)}</td><td><span class="badge ${x.type==='withdrawal'?'br':x.type==='task'?'bg':'bm'}">${x.type}</span></td><td>${x.description}</td><td style="font-family:Syne,sans-serif;font-weight:700;color:${x.amount>=0?'var(--accent)':'var(--error)'};">${x.amount>=0?'+':''}$${Math.abs(x.amount).toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--muted)">No transactions yet</td></tr>'}</tbody></table>`;
+}
+
+async function loadTasks(){
+  const r=await fetch(`${API}/tasks`,{headers:H()});
+  const t=await r.json();
+  $('tGrid').innerHTML=t.map(x=>`<div class="tc ${x.completed?'done':''}" id="tc-${x.id}"><div class="tcat">${x.category}</div><h3>${x.title}</h3><p>${x.description}</p><div class="tmeta"><div class="trew">$${x.reward.toFixed(2)}</div><div class="ttim">⏱ ~${x.time_minutes}m</div></div><button class="tbtn ${x.completed?'cp':'av'}" onclick="${x.completed?'':'`completeTask('+x.id+')`'}" ${x.completed?'disabled':''}>
+    ${x.completed?'✓ Completed':'Start Task →'}</button></div>`).join('');
+}
+
+async function completeTask(id){
+  const btn=document.querySelector(`#tc-${id} .tbtn`);
+  btn.disabled=true;btn.textContent='Submitting…';
+  const r=await fetch(`${API}/tasks/${id}/complete`,{method:'POST',headers:H()});
+  const d=await r.json();
+  if(r.ok){
+    showAl('tAlert',`✓ +$${d.reward.toFixed(2)} earned! Balance: $${d.new_balance.toFixed(2)}`,'s');
+    $('sBal').textContent='$'+d.new_balance.toFixed(2);
+    await loadTasks();
+  }else{showAl('tAlert',d.error,'e');btn.disabled=false;btn.textContent='Start Task →';}
+}
+
+async function loadRefs(){
+  const r=await fetch(`${API}/user/referrals`,{headers:H()});
+  const d=await r.json();
+  $('refTbl').innerHTML=`<table><thead><tr><th>Name</th><th>Joined</th><th>Reward</th></tr></thead><tbody>${d.map(x=>`<tr><td>${x.name}</td><td>${fd(x.created_at)}</td><td style="color:var(--accent);font-weight:700">+$${x.reward.toFixed(2)}</td></tr>`).join('')||'<tr><td colspan="3" style="text-align:center;color:var(--muted)">No referrals yet</td></tr>'}</tbody></table>`;
+}
+
+async function loadWdHist(){
+  const r=await fetch(`${API}/withdrawals`,{headers:H()});
+  const d=await r.json();
+  $('wHist').innerHTML=`<table><thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody>${d.map(x=>`<tr><td>${fd(x.requested_at)}</td><td style="font-family:Syne,sans-serif;font-weight:700">$${x.amount.toFixed(2)}</td><td style="text-transform:capitalize">${x.method.replace('_',' ')}</td><td><span class="badge ${x.status==='paid'?'bg':x.status==='pending'?'by':'br'}">${x.status}</span></td></tr>`).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--muted)">No withdrawals yet</td></tr>'}</tbody></table>`;
+}
+
+async function submitWd(){
+  const amt=$('wAmt').value,meth=$('wMeth').value,acc=$('wAcc').value.trim();
+  if(!amt||!meth||!acc){showWd('Please fill in all fields.','e');return;}
+  const btn=$('wBtn');btn.disabled=true;btn.textContent='Submitting…';
+  const r=await fetch(`${API}/withdrawals`,{method:'POST',headers:H(),body:JSON.stringify({amount:parseFloat(amt),method:meth,account:acc})});
+  const d=await r.json();
+  if(r.ok){showWd('✓ '+d.message,'s');$('wAmt').value='';$('wMeth').value='';$('wAcc').value='';loadWdHist();init();}
+  else showWd(d.error,'e');
+  btn.disabled=false;btn.textContent='Submit Withdrawal Request';
+}
+
+const titles={home:'Dashboard',tasks:'Tasks',referrals:'Referrals',withdraw:'Withdraw',history:'History'};
+function sw(n,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(x=>x.classList.remove('active'));
+  $(`panel-${n}`).classList.add('active');
+  if(el)el.classList.add('active');
+  $('pgTitle').textContent=titles[n];
+  if(n==='tasks')loadTasks();
+  else if(n==='referrals')loadRefs();
+  else if(n==='withdraw')loadWdHist();
+  else if(n==='history')loadTx();
+  document.getElementById('sb').classList.remove('open');
+}
+
+function copyRef(){
+  navigator.clipboard.writeText($('refLink').value).then(()=>{
+    event.target.textContent='Copied!';setTimeout(()=>event.target.textContent='Copy',2000);
+  });
+}
+function showAl(id,m,t){const e=$(id);e.textContent=m;e.className=`al al-${t==='s'?'s':'e'}`;e.style.display='block';setTimeout(()=>e.style.display='none',5000);}
+function showWd(m,t){const e=$('wAlert');e.textContent=m;e.className=`al al-${t==='s'?'s':'e'}`;e.style.display='block';setTimeout(()=>e.style.display='none',5000);}
+function logout(){localStorage.removeItem('tv_token');localStorage.removeItem('tv_user');window.location.href='/login.html';}
+
+init();
+</script>
+</body>
+</html>
