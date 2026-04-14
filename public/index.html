@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TaskVault – Earn Real Rewards</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<!-- ADSENSE: Replace ca-pub-XXXXXXXX with your publisher ID once approved -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"></script> -->
+<style>
+:root{--bg:#09090f;--surface:#111118;--surface2:#18181f;--border:#2a2a38;--accent:#c8f04d;--accent2:#7eeabd;--text:#f0f0f8;--muted:#7a7a90;--r:16px;}
+*{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Syne',sans-serif;line-height:1.15;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 40px;position:sticky;top:0;background:rgba(9,9,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:100;}
+.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);text-decoration:none;}.logo span{color:var(--accent);}
+.nav-cta{background:var(--accent);color:#0a0a0a;border:none;padding:10px 22px;border-radius:8px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .2s;}.nav-cta:hover{opacity:.88;}
+nav a.sec{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;margin-right:20px;}
+.hero{min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(ellipse,rgba(200,240,77,.12) 0%,transparent 70%);pointer-events:none;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(200,240,77,.1);border:1px solid rgba(200,240,77,.25);color:var(--accent);padding:6px 16px;border-radius:100px;font-size:13px;font-weight:600;margin-bottom:28px;animation:fadeUp .6s ease both;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+h1{font-size:clamp(44px,7vw,92px);font-weight:800;letter-spacing:-2px;max-width:860px;animation:fadeUp .7s .1s ease both;}
+h1 em{font-style:normal;color:var(--accent);}
+.hero-sub{color:var(--muted);font-size:18px;max-width:500px;margin:20px auto 40px;animation:fadeUp .7s .2s ease both;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fadeUp .7s .3s ease both;}
+.btn-p{background:var(--accent);color:#0a0a0a;border:none;padding:16px 32px;border-radius:10px;font-family:'Syne',sans-serif;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,240,77,.3);}
+.btn-s{background:transparent;color:var(--text);border:1px solid var(--border);padding:16px 32px;border-radius:10px;font-family:'Syne',sans-serif;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;}
+.btn-s:hover{border-color:var(--muted);}
+.pills{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:60px;animation:fadeUp .7s .4s ease both;}
+.pill{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 24px;text-align:center;min-width:130px;}
+.pill-v{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--accent);}
+.pill-l{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+section{padding:90px 24px;max-width:1080px;margin:0 auto;}
+.stag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:12px;}
+.stitle{font-size:clamp(28px,4vw,46px);font-weight:800;margin-bottom:14px;}
+.ssub{color:var(--muted);font-size:16px;max-width:480px;}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2px;background:var(--border);border-radius:var(--r);overflow:hidden;margin-top:48px;}
+.sc{background:var(--surface);padding:36px 28px;}
+.sc .n{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;}.sc .n span{color:var(--accent);}
+.sc .d{color:var(--muted);margin-top:6px;font-size:14px;}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:48px;}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:32px;position:relative;overflow:hidden;transition:border-color .2s;}
+.step:hover{border-color:rgba(200,240,77,.3);}
+.sn{font-family:'Syne',sans-serif;font-size:60px;font-weight:800;color:rgba(200,240,77,.07);position:absolute;top:10px;right:16px;line-height:1;}
+.si{width:46px;height:46px;border-radius:12px;background:rgba(200,240,77,.1);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:18px;}
+.step h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+.step p{color:var(--muted);font-size:14px;line-height:1.65;}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-top:48px;}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:border-color .2s;}
+.tcard:hover{border-color:rgba(126,234,189,.25);}
+.th{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.tav{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:#0a0a0a;flex-shrink:0;}
+.tn{font-weight:600;font-size:14px;}.tr{font-size:11px;color:var(--muted);}
+.ts{color:var(--accent);font-size:12px;margin-bottom:8px;letter-spacing:2px;}
+.tcard p{color:var(--muted);font-size:13px;line-height:1.65;}
+.faq-list{margin-top:48px;display:flex;flex-direction:column;gap:8px;}
+.fi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.fq{padding:20px 24px;font-family:'Syne',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;transition:background .15s;}
+.fq:hover{background:var(--surface2);}
+.fi-icon{font-size:18px;color:var(--accent);transition:transform .3s;}
+.fa{display:none;padding:0 24px 20px;color:var(--muted);font-size:14px;line-height:1.7;}
+.fi.open .fa{display:block;}.fi.open .fi-icon{transform:rotate(45deg);}
+.cta{background:linear-gradient(135deg,rgba(200,240,77,.12),rgba(126,234,189,.08));border:1px solid rgba(200,240,77,.2);border-radius:24px;padding:64px 40px;text-align:center;max-width:1080px;margin:0 auto 90px;}
+.cta h2{font-size:clamp(28px,4vw,48px);font-weight:800;margin-bottom:14px;}
+.cta p{color:var(--muted);font-size:16px;margin-bottom:32px;}
+/* AD SLOT */
+.ad-slot{background:var(--surface);border:1px dashed var(--border);border-radius:12px;min-height:90px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;margin:32px 0;text-align:center;padding:12px;max-width:1080px;margin-left:auto;margin-right:auto;}
+footer{border-top:1px solid var(--border);padding:36px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:13px;}
+footer a{color:var(--muted);text-decoration:none;}footer a:hover{color:var(--text);}
+@media(max-width:600px){nav{padding:14px 18px;}.hero-actions{flex-direction:column;align-items:center;}.cta{padding:40px 20px;margin:0 16px 70px;}footer{padding:28px 18px;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="/">Task<span>Vault</span></a>
+  <div>
+    <a class="sec" href="#how">How It Works</a>
+    <a class="nav-cta" href="/signup.html">Get Started Free</a>
+  </div>
+</nav>
+
+<!-- ADSENSE BANNER — uncomment after approval -->
+<div class="ad-slot" style="margin-top:0;border-radius:0;border-left:none;border-right:none;border-top:none;">
+  📢 Ad Banner — add your AdSense unit here after approval
+</div>
+
+<div class="hero">
+  <div class="hero-badge">🟢 Accepting new members worldwide</div>
+  <h1>Complete Tasks.<br/><em>Get Paid.</em> Simple.</h1>
+  <p class="hero-sub">Join TaskVault — earn real money completing short tasks and referring friends.</p>
+  <div class="hero-actions">
+    <a href="/signup.html" class="btn-p">Create Free Account</a>
+    <a href="#how" class="btn-s">See How It Works</a>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-v">$5.00</div><div class="pill-l">Welcome Bonus</div></div>
+    <div class="pill"><div class="pill-v">$3.00</div><div class="pill-l">Per Referral</div></div>
+    <div class="pill"><div class="pill-v">$0.50+</div><div class="pill-l">Per Task</div></div>
+    <div class="pill"><div class="pill-v">$25.00</div><div class="pill-l">Min. Payout</div></div>
+  </div>
+</div>
+
+<section>
+  <p class="stag">Platform Stats</p>
+  <h2 class="stitle">Real Numbers, Real Payouts</h2>
+  <p class="ssub">Transparent earnings you can track and withdraw via PayPal, Wise, or bank transfer.</p>
+  <div class="stats-row">
+    <div class="sc"><div class="n">14<span>K+</span></div><div class="d">Active Earners This Month</div></div>
+    <div class="sc"><div class="n">$<span>82K</span></div><div class="d">Paid Out in Last 30 Days</div></div>
+    <div class="sc"><div class="n">300<span>+</span></div><div class="d">Tasks Available</div></div>
+    <div class="sc"><div class="n">98<span>%</span></div><div class="d">Withdrawal Success Rate</div></div>
+  </div>
+</section>
+
+<section id="how">
+  <p class="stag">Getting Started</p>
+  <h2 class="stitle">Three Steps to Your First Payout</h2>
+  <div class="steps">
+    <div class="step"><div class="sn">01</div><div class="si">🎉</div><h3>Sign Up & Get Your Bonus</h3><p>Create your free account and receive a $5.00 welcome bonus instantly — no card required.</p></div>
+    <div class="step"><div class="sn">02</div><div class="si">⚡</div><h3>Complete Tasks & Refer Friends</h3><p>Browse surveys, video tasks, app tests, and more. Earn $0.50–$5.00 per task, plus $3.00 for every referral.</p></div>
+    <div class="step"><div class="sn">03</div><div class="si">💸</div><h3>Withdraw to Your Account</h3><p>Hit $25.00 and request a payout via PayPal, Wise, or bank transfer. Processed in 1–3 business days.</p></div>
+  </div>
+</section>
+
+<div class="ad-slot">📢 Ad Rectangle (300×250) — add your AdSense unit here after approval</div>
+
+<section>
+  <p class="stag">Member Stories</p>
+  <h2 class="stitle">What Our Earners Say</h2>
+  <div class="tgrid">
+    <div class="tcard"><div class="th"><div class="tav">AM</div><div><div class="tn">Amara M.</div><div class="tr">Member since 2024</div></div></div><div class="ts">★★★★★</div><p>"I cashed out within my first two weeks. Tasks are short and balance updates immediately."</p></div>
+    <div class="tcard"><div class="th"><div class="tav">JK</div><div><div class="tn">James K.</div><div class="tr">Member since 2024</div></div></div><div class="ts">★★★★★</div><p>"The referral system is straightforward. Withdrawal via PayPal was fast."</p></div>
+    <div class="tcard"><div class="th"><div class="tav">PS</div><div><div class="tn">Priya S.</div><div class="tr">Member since 2025</div></div></div><div class="ts">★★★★☆</div><p>"Tasks are clearly labelled with earnings before you start. The $25 minimum is very reachable."</p></div>
+    <div class="tcard"><div class="th"><div class="tav">TB</div><div><div class="tn">Tunde B.</div><div class="tr">Member since 2025</div></div></div><div class="ts">★★★★★</div><p>"TaskVault is the only platform that actually processes withdrawals. Great support team."</p></div>
+    <div class="tcard"><div class="th"><div class="tav">LC</div><div><div class="tn">Laura C.</div><div class="tr">Member since 2025</div></div></div><div class="ts">★★★★★</div><p>"I do tasks during lunch. Survey tasks pay well and I've withdrawn twice already."</p></div>
+    <div class="tcard"><div class="th"><div class="tav">NK</div><div><div class="tn">Nadia K.</div><div class="tr">Member since 2025</div></div></div><div class="ts">★★★★★</div><p>"Simple dashboard, clear earnings history, and a reasonable payout threshold."</p></div>
+  </div>
+</section>
+
+<section>
+  <p class="stag">Questions</p>
+  <h2 class="stitle">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="fi"><div class="fq" onclick="this.parentElement.classList.toggle('open')">How long does a withdrawal take?<span class="fi-icon">+</span></div><div class="fa">Withdrawals are processed within 1–3 business days. PayPal is typically fastest.</div></div>
+    <div class="fi"><div class="fq" onclick="this.parentElement.classList.toggle('open')">Is the welcome bonus withdrawable?<span class="fi-icon">+</span></div><div class="fa">Yes. The $5.00 welcome bonus counts toward your $25.00 minimum, just like any earned balance.</div></div>
+    <div class="fi"><div class="fq" onclick="this.parentElement.classList.toggle('open')">What types of tasks are available?<span class="fi-icon">+</span></div><div class="fa">Surveys, app testing, video watching, product reviews, data labelling, and more. Pay ranges from $0.50 to $5.00.</div></div>
+    <div class="fi"><div class="fq" onclick="this.parentElement.classList.toggle('open')">Can I earn from any country?<span class="fi-icon">+</span></div><div class="fa">Yes. TaskVault works globally. Some tasks may be region-specific based on advertiser requirements.</div></div>
+    <div class="fi"><div class="fq" onclick="this.parentElement.classList.toggle('open')">How does the referral program work?<span class="fi-icon">+</span></div><div class="fa">Share your unique referral link. When someone signs up through it and completes their first task, you get $3.00 automatically.</div></div>
+  </div>
+</section>
+
+<div class="cta">
+  <h2>Start Earning Today.<br/>Your First $5.00 Is Waiting.</h2>
+  <p>No credit card. No hidden fees. Sign up and get paid for your time.</p>
+  <a href="/signup.html" class="btn-p" style="font-size:17px;padding:18px 40px;">Create My Free Account</a>
+</div>
+
+<footer>
+  <a href="/" style="font-family:Syne,sans-serif;font-weight:700;font-size:18px;color:var(--text)">Task<span style="color:var(--accent)">Vault</span></a>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Support</a></div>
+  <div>© 2025 TaskVault</div>
+</footer>
+</body>
+  </html>
